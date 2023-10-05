@@ -16,7 +16,7 @@ Use [FITSIO extended file syntax](https://heasarc.gsfc.nasa.gov/docs/software/fi
 
 <details>
 
-<summary>Extract subset of modes</summary>
+<summary>Extracting a subset of modes</summary>
 
 ```bash
 #!/usr/bin/env bash
@@ -51,7 +51,7 @@ The corresponding milk script allows for more fine tuning (for example multiplyi
 
 <details>
 
-<summary>merge mode script</summary>
+<summary>Concatenating modes</summary>
 
 ```bash
 #!/usr/bin/env bash
