@@ -6,7 +6,7 @@ The system linear calibration consists of the following files:
 
 These are the input to the [computation of control modes](acquiring-linear-response-calibration.md#6.-computing-control-modes).
 
-### 5.1. Preparing DM Poke Modes
+### 1. Preparing DM Poke Modes
 
 The <mark style="color:green;">`cacao-mkDMpokemodes`</mark> command computes a few different sets of poke modes, from which we can choose the DM poke modes used for [acquiring the WFS linear response](acquiring-linear-response-calibration.md#5.2.-acquiring-wfs-linear-response-to-dm-poke-modes).
 
@@ -22,7 +22,7 @@ The following files are written to `./conf/RMmodesDM/`:
 
 DM poke modes can also be prepared independently of the <mark style="color:green;">`cacao-mkDMpokemodes`</mark> command, following the file name convention `./conf/RMmodesDM/<name>.fits`.
 
-### 5.2. Acquiring WFS Linear Response to DM poke modes
+### 2. Acquiring WFS Linear Response to DM poke modes
 
 The <mark style="color:green;">`cacao-aorun-030-acqlinResp`</mark> command acquires the WFS response corresponding to a set of [DM poke modes](acquiring-linear-response-calibration.md#5.1.-preparing-dm-poke-modes). For example, to acquire the calibration with Hadamard poke modes:&#x20;
 
@@ -49,7 +49,7 @@ cacao-aorun-030-acqlinResp -n 30 TipTiltFoc
 
 The <mark style="color:green;">`cacao-aorun-030-acqlinResp`</mark> command also creates/updates the sym link `./conf/RMmodesWFS/RMmodesWFS.fits` to point to the new `<name>.WFSresp.fits` file, so that the [compute control matrix step](acquiring-linear-response-calibration.md#6.-computing-control-matrix) could be run.
 
-### 5.3. Representing WFS response in zonal space (optional)
+### 3. Representing WFS response in zonal space (optional)
 
 {% hint style="info" %}
 Zonal representation is useful for visualization, showing the WFS response to individual DM actuators. Zonal representation also makes DM mask computation relatively straightforward.
@@ -81,7 +81,7 @@ exitCLI
 ```
 {% endcode %}
 
-### 5.4. DM and WFS masks (optional)
+### 4. DM and WFS masks (optional)
 
 If a zonal response matrix exists, then DM and WFS maps and masks can be computed:
 
