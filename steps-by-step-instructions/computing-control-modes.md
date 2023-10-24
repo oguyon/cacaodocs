@@ -47,11 +47,21 @@ DM-space normalization ensures that the modal coefficients obtained by the above
 
 ## 2. Ordering CMs by Spatial Frequency
 
-{% hint style="danger" %}
-<mark style="color:red;">**Experimental - to be finalized**</mark>
-{% endhint %}
+The SVD-based process orders modes by singular value, such that DM patterns creating the strongest linear WFS response are first.
+
+Ordering CMs by spatial frequency (low-order modes first) is often preferable when implementing and tuning modal control.
 
 ```bash
+# Input: 
+# - conf/CMmodesDM.fits
+# - conf/CMmodesWFS.fits
+# - conf/dmmask.fits
+# - conf/wfsmask.fits
+#
+# Output:
+# - conf/CMmodesDM/CMmodesDM_sf.fits
+# - conf/CMmodesWFS/CMmodesWFS_sf.fits
+#
 cacao-aorun-040-compfCM -g 0 -c 25
 ```
 
