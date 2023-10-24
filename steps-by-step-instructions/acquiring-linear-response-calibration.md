@@ -66,7 +66,7 @@ RMpokeTiming.iter0001.txt  wfsresp.tstep001.iter0001.fits  wfsresp.tstep003.iter
 {% endhint %}
 
 {% hint style="info" %}
-**Stopping the RM acquisition**. To cleanly stop the acquisition, type "K" in the corresponding milk-procCTRL entry. This will stop the RM acquisition at the end of the current iteration and process the files accumulated so far.&#x20;
+**Stopping the RM acquisition**. &#x20;
 {% endhint %}
 
 ### 3. Representing WFS response in zonal space (optional)
