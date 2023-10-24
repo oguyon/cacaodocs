@@ -1,15 +1,15 @@
 # Steps-by-step instructions
 
 {% hint style="success" %}
-**Before proceeding with the instructions in this page**, read the [Getting Situated ](getting-situated.md)page, and keep the [Building Blocks](building-blocks-milk/) page handy. Some familiarity with the programs <mark style="color:green;">`milk-fpsCTRL`</mark>, <mark style="color:green;">`milk-streamCTRL`</mark> and <mark style="color:green;">`milk-procCTRL`</mark> is helpful to follow what is happening "under the hood". A [stream viewer](installation/stream-viewers.md) is also highly recommended to visualize data along the way.
+**Before proceeding with the instructions in this page**, read the [Getting Situated ](../getting-situated.md)page, and keep the [Building Blocks](../building-blocks-milk/) page handy. Some familiarity with the programs <mark style="color:green;">`milk-fpsCTRL`</mark>, <mark style="color:green;">`milk-streamCTRL`</mark> and <mark style="color:green;">`milk-procCTRL`</mark> is helpful to follow what is happening "under the hood". A [stream viewer](../installation/stream-viewers.md) is also highly recommended to visualize data along the way.
 {% endhint %}
 
-{% content-ref url="getting-situated.md" %}
-[getting-situated.md](getting-situated.md)
+{% content-ref url="../getting-situated.md" %}
+[getting-situated.md](../getting-situated.md)
 {% endcontent-ref %}
 
-{% content-ref url="building-blocks-milk/" %}
-[building-blocks-milk](building-blocks-milk/)
+{% content-ref url="../building-blocks-milk/" %}
+[building-blocks-milk](../building-blocks-milk/)
 {% endcontent-ref %}
 
 ## 1. Deployment from an Example: Setting up Processes
@@ -63,8 +63,8 @@ From this point on, all commands should be run from the root directory. To check
 
 Message logging is optional.
 
-{% content-ref url="tech-notes/message-logging.md" %}
-[message-logging.md](tech-notes/message-logging.md)
+{% content-ref url="../tech-notes/message-logging.md" %}
+[message-logging.md](../tech-notes/message-logging.md)
 {% endcontent-ref %}
 
 ### 1.4. Select simulation or hardware mode
@@ -126,7 +126,7 @@ cacao-aorun-026-takeref -n 2000
 
 ## 4. Measuring Hardware Latency
 
-The time delay between issuing a command to the DM and having the corresponding signal in the WFS stream is the hardware latency. It must be known to [measure the system response](steps-by-step-instructions.md#5.2.-running-linear-response-measurement), as well as for some advanced control features such as pseudo-open loop reconstruction and predictive control.
+The time delay between issuing a command to the DM and having the corresponding signal in the WFS stream is the hardware latency. It must be known to [measure the system response](./#5.2.-running-linear-response-measurement), as well as for some advanced control features such as pseudo-open loop reconstruction and predictive control.
 
 ```bash
 # -w option is for "wait until done"
@@ -141,11 +141,11 @@ The system linear calibration consists of the following files:
 
 <table><thead><tr><th width="382">File</th><th>Description</th></tr></thead><tbody><tr><td><code>./conf/RMmodesDM/RMmodesDM.fits</code></td><td>Calibration DM modes</td></tr><tr><td><code>./conf/RMmodesWFS/RMmodesWFS.fits</code></td><td>WFS linear response to DM modes</td></tr><tr><td><code>./conf/dmmask.fits</code></td><td>DM mask (active actuators = 1)</td></tr><tr><td><code>./conf/wfsmask.fits</code></td><td>WFS mask (active pixels = 1)</td></tr></tbody></table>
 
-These are the input to the [computation of control modes](steps-by-step-instructions.md#6.-computing-control-modes).
+These are the input to the [computation of control modes](./#6.-computing-control-modes).
 
 ### 5.1. Preparing DM Poke Modes
 
-The <mark style="color:green;">`cacao-mkDMpokemodes`</mark> command computes a few different sets of poke modes, from which we can choose the DM poke modes used for [acquiring the WFS linear response](steps-by-step-instructions.md#5.2.-acquiring-wfs-linear-response-to-dm-poke-modes).
+The <mark style="color:green;">`cacao-mkDMpokemodes`</mark> command computes a few different sets of poke modes, from which we can choose the DM poke modes used for [acquiring the WFS linear response](./#5.2.-acquiring-wfs-linear-response-to-dm-poke-modes).
 
 ```bash
 # -z is for number of Zernike modes
@@ -161,7 +161,7 @@ DM poke modes can also be prepared independently of the <mark style="color:green
 
 ### 5.2. Acquiring WFS Linear Response to DM poke modes
 
-The <mark style="color:green;">`cacao-aorun-030-acqlinResp`</mark> command acquires the WFS response corresponding to a set of [DM poke modes](steps-by-step-instructions.md#5.1.-preparing-dm-poke-modes). For example, to acquire the calibration with Hadamard poke modes:&#x20;
+The <mark style="color:green;">`cacao-aorun-030-acqlinResp`</mark> command acquires the WFS response corresponding to a set of [DM poke modes](./#5.1.-preparing-dm-poke-modes). For example, to acquire the calibration with Hadamard poke modes:&#x20;
 
 ```bash
 # -n : number of cycles (increase for higher SNR)
@@ -184,7 +184,7 @@ cacao-aorun-030-acqlinResp -n 30 TipTiltFoc
 </code></pre>
 {% endhint %}
 
-The <mark style="color:green;">`cacao-aorun-030-acqlinResp`</mark> command also creates/updates the sym link `./conf/RMmodesWFS/RMmodesWFS.fits` to point to the new `<name>.WFSresp.fits` file, so that the [compute control matrix step](steps-by-step-instructions.md#6.-computing-control-matrix) could be run.
+The <mark style="color:green;">`cacao-aorun-030-acqlinResp`</mark> command also creates/updates the sym link `./conf/RMmodesWFS/RMmodesWFS.fits` to point to the new `<name>.WFSresp.fits` file, so that the [compute control matrix step](./#6.-computing-control-matrix) could be run.
 
 ### 5.3. Representing WFS response in zonal space (optional)
 
@@ -262,12 +262,12 @@ Check especially the number of modes controlled.
 
 For more information, including fine tuning:
 
-{% content-ref url="tech-notes/computing-control-modes-basics.md" %}
-[computing-control-modes-basics.md](tech-notes/computing-control-modes-basics.md)
+{% content-ref url="../tech-notes/computing-control-modes-basics.md" %}
+[computing-control-modes-basics.md](../tech-notes/computing-control-modes-basics.md)
 {% endcontent-ref %}
 
-{% content-ref url="tech-notes/control-modes-advanced.md" %}
-[control-modes-advanced.md](tech-notes/control-modes-advanced.md)
+{% content-ref url="../tech-notes/control-modes-advanced.md" %}
+[control-modes-advanced.md](../tech-notes/control-modes-advanced.md)
 {% endcontent-ref %}
 
 ***
