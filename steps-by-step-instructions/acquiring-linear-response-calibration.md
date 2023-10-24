@@ -49,6 +49,22 @@ cacao-aorun-030-acqlinResp -n 30 TipTiltFoc
 
 The <mark style="color:green;">`cacao-aorun-030-acqlinResp`</mark> command also creates/updates the sym link `./conf/RMmodesWFS/RMmodesWFS.fits` to point to the new `<name>.WFSresp.fits` file, so that the [compute control matrix step](acquiring-linear-response-calibration.md#6.-computing-control-matrix) could be run.
 
+{% hint style="info" %}
+Use the -s option to save all intermediate files for custom assembly/averaging of the response matrix. Files will appear in directory ./LOOPNAME\_rundir/measlinrespm/DATE. By default (no -s option), only timing info and poke sequence info will be written. With the -s option, FITS files corresponding to each RM (time step and iteration) will be written. Example directory content with -s option:
+
+```
+mode_linresp_raw.fits      RMpokeTiming.iter0002.txt       wfsresp.tstep001.iter0002.fits  wfsresp.tstep003.iter0002.fits
+RMacqulog.txt              RMpokeTiming.iter0003.txt       wfsresp.tstep001.iter0003.fits  wfsresp.tstep003.iter0003.fits
+RMpokelog.iter0000.txt     wfsresp.tstep000.iter0000.fits  wfsresp.tstep002.iter0000.fits  wfsresp.tstep004.iter0000.fits
+RMpokelog.iter0001.txt     wfsresp.tstep000.iter0001.fits  wfsresp.tstep002.iter0001.fits  wfsresp.tstep004.iter0001.fits
+RMpokelog.iter0002.txt     wfsresp.tstep000.iter0002.fits  wfsresp.tstep002.iter0002.fits  wfsresp.tstep004.iter0002.fits
+RMpokelog.iter0003.txt     wfsresp.tstep000.iter0003.fits  wfsresp.tstep002.iter0003.fits  wfsresp.tstep004.iter0003.fits
+RMpokeTiming.iter0000.txt  wfsresp.tstep001.iter0000.fits  wfsresp.tstep003.iter0000.fits
+RMpokeTiming.iter0001.txt  wfsresp.tstep001.iter0001.fits  wfsresp.tstep003.iter0001.fits
+
+```
+{% endhint %}
+
 ### 3. Representing WFS response in zonal space (optional)
 
 {% hint style="info" %}
