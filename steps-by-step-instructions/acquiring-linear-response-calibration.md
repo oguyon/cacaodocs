@@ -4,7 +4,7 @@ The system linear calibration consists of the following files:
 
 <table><thead><tr><th width="382">File</th><th>Description</th></tr></thead><tbody><tr><td><code>./conf/RMmodesDM/RMmodesDM.fits</code></td><td>Calibration DM modes</td></tr><tr><td><code>./conf/RMmodesWFS/RMmodesWFS.fits</code></td><td>WFS linear response to DM modes</td></tr><tr><td><code>./conf/dmmask.fits</code></td><td>DM mask (active actuators = 1)</td></tr><tr><td><code>./conf/wfsmask.fits</code></td><td>WFS mask (active pixels = 1)</td></tr></tbody></table>
 
-These are the input to the [computation of control modes](acquiring-linear-response-calibration.md#6.-computing-control-modes).
+These are the input to the [computation of control modes.](../tech-notes/computing-control-modes-basics.md)
 
 ### 1. Preparing DM Poke Modes
 
