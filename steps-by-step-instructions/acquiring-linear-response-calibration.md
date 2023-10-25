@@ -50,23 +50,69 @@ cacao-aorun-030-acqlinResp -n 30 TipTiltFoc
 The <mark style="color:green;">`cacao-aorun-030-acqlinResp`</mark> command also creates/updates the sym link `./conf/RMmodesWFS/RMmodesWFS.fits` to point to the new `<name>.WFSresp.fits` file, so that the [compute control matrix step](acquiring-linear-response-calibration.md#6.-computing-control-matrix) could be run.
 
 {% hint style="info" %}
-Use the -s option to **save all intermediate files** for custom assembly/averaging of the response matrix. Files will appear in directory ./LOOPNAME\_rundir/measlinrespm/DATE. By default (no -s option), only timing info and poke sequence info will be written. With the -s option, FITS files corresponding to each RM (time step and iteration) will be written. Example directory content with -s option:
+Use the -s option to **save all intermediate files** for custom assembly/averaging of the response matrix. Files will appear in directory ./LOOPNAME\_rundir/measlinrespm/DATE. By default (no -s option), only timing info and poke sequence info will be written. With the -s option, FITS files corresponding to each RM (time step and iteration) will be written.
+{% endhint %}
+
+<details>
+
+<summary>Example measlinrespm directory content (with -s option)</summary>
 
 ```
-mode_linresp_raw.fits      RMpokeTiming.iter0002.txt       wfsresp.tstep001.iter0002.fits  wfsresp.tstep003.iter0002.fits
-RMacqulog.txt              RMpokeTiming.iter0003.txt       wfsresp.tstep001.iter0003.fits  wfsresp.tstep003.iter0003.fits
-RMpokelog.iter0000.txt     wfsresp.tstep000.iter0000.fits  wfsresp.tstep002.iter0000.fits  wfsresp.tstep004.iter0000.fits
-RMpokelog.iter0001.txt     wfsresp.tstep000.iter0001.fits  wfsresp.tstep002.iter0001.fits  wfsresp.tstep004.iter0001.fits
-RMpokelog.iter0002.txt     wfsresp.tstep000.iter0002.fits  wfsresp.tstep002.iter0002.fits  wfsresp.tstep004.iter0002.fits
-RMpokelog.iter0003.txt     wfsresp.tstep000.iter0003.fits  wfsresp.tstep002.iter0003.fits  wfsresp.tstep004.iter0003.fits
-RMpokeTiming.iter0000.txt  wfsresp.tstep001.iter0000.fits  wfsresp.tstep003.iter0000.fits
-RMpokeTiming.iter0001.txt  wfsresp.tstep001.iter0001.fits  wfsresp.tstep003.iter0001.fits
+> ls -lh
+total 5.8G
+-rw-rw-rw- 1 oguyon oguyon 113M Oct 24 20:07 mode_linresp.ave.iter0000.fits
+-rw-rw-rw- 1 oguyon oguyon 113M Oct 24 20:08 mode_linresp.ave.iter0001.fits
+-rw-rw-rw- 1 oguyon oguyon 113M Oct 24 20:09 mode_linresp.ave.iter0002.fits
+-rw-rw-rw- 1 oguyon oguyon 113M Oct 24 20:09 mode_linresp.ave.iter0003.fits
+-rw-rw-rw- 1 oguyon oguyon 226M Oct 24 20:07 mode_linresp.raw.iter0000.fits
+-rw-rw-rw- 1 oguyon oguyon 226M Oct 24 20:08 mode_linresp.raw.iter0001.fits
+-rw-rw-rw- 1 oguyon oguyon 226M Oct 24 20:09 mode_linresp.raw.iter0002.fits
+-rw-rw-rw- 1 oguyon oguyon 226M Oct 24 20:09 mode_linresp.raw.iter0003.fits
+-rw-rw-rw- 1 oguyon oguyon  193 Oct 24 20:09 RMacqulog.txt
+-rw-rw-rw- 1 oguyon oguyon 1.3M Oct 24 20:07 RMpokelog.iter0000.txt
+-rw-rw-rw- 1 oguyon oguyon 1.3M Oct 24 20:08 RMpokelog.iter0001.txt
+-rw-rw-rw- 1 oguyon oguyon 1.3M Oct 24 20:09 RMpokelog.iter0002.txt
+-rw-rw-rw- 1 oguyon oguyon 1.3M Oct 24 20:09 RMpokelog.iter0003.txt
+-rw-rw-rw- 1 oguyon oguyon 2.0M Oct 24 20:07 RMpokeTiming.iter0000.txt
+-rw-rw-rw- 1 oguyon oguyon 2.0M Oct 24 20:08 RMpokeTiming.iter0001.txt
+-rw-rw-rw- 1 oguyon oguyon 2.0M Oct 24 20:09 RMpokeTiming.iter0002.txt
+-rw-rw-rw- 1 oguyon oguyon 2.0M Oct 24 20:09 RMpokeTiming.iter0003.txt
+-rw-rw-rw- 1 oguyon oguyon 226M Oct 24 20:07 wfsresp.tstep000.iter0000.fits
+-rw-rw-rw- 1 oguyon oguyon 226M Oct 24 20:08 wfsresp.tstep000.iter0001.fits
+-rw-rw-rw- 1 oguyon oguyon 226M Oct 24 20:09 wfsresp.tstep000.iter0002.fits
+-rw-rw-rw- 1 oguyon oguyon 226M Oct 24 20:09 wfsresp.tstep000.iter0003.fits
+-rw-rw-rw- 1 oguyon oguyon 226M Oct 24 20:07 wfsresp.tstep001.iter0000.fits
+-rw-rw-rw- 1 oguyon oguyon 226M Oct 24 20:08 wfsresp.tstep001.iter0001.fits
+-rw-rw-rw- 1 oguyon oguyon 226M Oct 24 20:09 wfsresp.tstep001.iter0002.fits
+-rw-rw-rw- 1 oguyon oguyon 226M Oct 24 20:09 wfsresp.tstep001.iter0003.fits
+-rw-rw-rw- 1 oguyon oguyon 226M Oct 24 20:07 wfsresp.tstep002.iter0000.fits
+-rw-rw-rw- 1 oguyon oguyon 226M Oct 24 20:08 wfsresp.tstep002.iter0001.fits
+-rw-rw-rw- 1 oguyon oguyon 226M Oct 24 20:09 wfsresp.tstep002.iter0002.fits
+-rw-rw-rw- 1 oguyon oguyon 226M Oct 24 20:09 wfsresp.tstep002.iter0003.fits
+-rw-rw-rw- 1 oguyon oguyon 226M Oct 24 20:07 wfsresp.tstep003.iter0000.fits
+-rw-rw-rw- 1 oguyon oguyon 226M Oct 24 20:08 wfsresp.tstep003.iter0001.fits
+-rw-rw-rw- 1 oguyon oguyon 226M Oct 24 20:09 wfsresp.tstep003.iter0002.fits
+-rw-rw-rw- 1 oguyon oguyon 226M Oct 24 20:09 wfsresp.tstep003.iter0003.fits
+-rw-rw-rw- 1 oguyon oguyon 226M Oct 24 20:07 wfsresp.tstep004.iter0000.fits
+-rw-rw-rw- 1 oguyon oguyon 226M Oct 24 20:08 wfsresp.tstep004.iter0001.fits
+-rw-rw-rw- 1 oguyon oguyon 226M Oct 24 20:09 wfsresp.tstep004.iter0002.fits
+-rw-rw-rw- 1 oguyon oguyon 226M Oct 24 20:09 wfsresp.tstep004.iter0003.fits
 
 ```
+
+</details>
+
+{% hint style="warning" %}
+<mark style="color:red;">**Watch out disk usage**</mark>, especially when saving all intermediate files and taking many calibrations.
 {% endhint %}
 
 {% hint style="info" %}
-**Stopping the RM acquisition**. &#x20;
+**Stopping the RM acquisition**.  The RM acquisition process can be stopped at any time, before the total number of iterations is reached. The process saves results at the end of each iteration, writing both intermediate files and the overall (cummulated/averaged) response matrix. There are 2 ways to stop the RM acquisition process:
+
+* INT or TERM signals: Type CTRL+SHIFT+r in fpsCTRL, or send INT signal to run process (this can be done by typing SHIFT+i in procCTRL). This will complete the current and next iteration and then gently stop the process.
+* KILL signal: Send KILL signal to run process (this can be done by typing SHIFT+k in procCTRL). This will stop the process immediately.
+
+**Excluding most recent RM iteration(s)**. In the `measlinrespm` directory, the RM (cummulated/averaged) is written at the end of each iteration, as file `mode_linresp.ave.iterXXXX.fits`. If some disruptive event occurred where the last iterations are known to be corrupted, use the appropriate such file, and copy it to the desired output destination.
 {% endhint %}
 
 ### 3. Representing WFS response in zonal space (optional)
