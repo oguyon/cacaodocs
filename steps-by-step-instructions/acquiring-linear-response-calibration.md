@@ -55,7 +55,7 @@ Use the -s option to **save all intermediate files** for custom assembly/averagi
 
 <details>
 
-<summary>Example measlinrespm directory content (with -s option)</summary>
+<summary>Example <code>measlinrespm</code>directory content (with -s option)</summary>
 
 ```
 > ls -lh
