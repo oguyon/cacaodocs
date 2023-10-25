@@ -8,7 +8,7 @@ These are the input to the [computation of control modes.](../tech-notes/computi
 
 ### 1. Preparing DM Poke Modes
 
-The <mark style="color:green;">`cacao-mkDMpokemodes`</mark> command computes a few different sets of poke modes, from which we can choose the DM poke modes used for [acquiring the WFS linear response](acquiring-linear-response-calibration.md#5.2.-acquiring-wfs-linear-response-to-dm-poke-modes).
+The <mark style="color:green;">`cacao-mkDMpokemodes`</mark> command computes a few different sets of poke modes, from which we can choose the DM poke modes used for acquiring the WFS linear response.
 
 ```bash
 # -z is for number of Zernike modes
@@ -50,7 +50,7 @@ cacao-aorun-030-acqlinResp -n 30 TipTiltFoc
 The <mark style="color:green;">`cacao-aorun-030-acqlinResp`</mark> command also creates/updates the sym link `./conf/RMmodesWFS/RMmodesWFS.fits` to point to the new `<name>.WFSresp.fits` file, so that the [compute control matrix step](acquiring-linear-response-calibration.md#6.-computing-control-matrix) could be run.
 
 {% hint style="info" %}
-Use the -s option to **save all intermediate files** for custom assembly/averaging of the response matrix. Files will appear in directory ./LOOPNAME\_rundir/measlinrespm/DATE. By default (no -s option), only timing info and poke sequence info will be written. With the -s option, FITS files corresponding to each RM (time step and iteration) will be written.
+Use the -s option to **save all intermediate files** for custom assembly/averaging of the response matrix. Files will appear in directory `./LOOPNAME_rundir/measlinrespm/DATE`. By default (no -s option), only timing info and poke sequence info will be written. With the -s option, FITS files corresponding to each RM (time step and iteration) will be written.
 {% endhint %}
 
 <details>
@@ -107,12 +107,12 @@ total 5.8G
 {% endhint %}
 
 {% hint style="info" %}
-**Stopping the RM acquisition**.  The RM acquisition process can be stopped at any time, before the total number of iterations is reached. The process saves results at the end of each iteration, writing both intermediate files and the overall (cummulated/averaged) response matrix. There are 2 ways to stop the RM acquisition process:
+**Stopping the RM acquisition**.  The RM acquisition process can be stopped at any time, before the total number of iterations is reached. The process saves results at the end of each iteration, writing both intermediate files and the overall (averaged) response matrix. There are 2 ways to stop the RM acquisition process:
 
-* INT or TERM signals: Type CTRL+SHIFT+r in fpsCTRL, or send INT signal to run process (this can be done by typing SHIFT+i in procCTRL). This will complete the current and next iteration and then gently stop the process.
-* KILL signal: Send KILL signal to run process (this can be done by typing SHIFT+k in procCTRL). This will stop the process immediately.
+* INT or TERM signals: Type CTRL+SHIFT+r in <mark style="color:green;">`milk-fpsCTRL`</mark>, or send INT signal to run process (this can be done by typing SHIFT+i in <mark style="color:green;">`milk-procCTRL`</mark>). This will complete the current and next iteration and then gently stop the process.
+* KILL signal: Send KILL signal to run process (this can be done by typing SHIFT+k in <mark style="color:green;">`milk-procCTRL`</mark>). This will stop the process immediately.
 
-**Excluding most recent RM iteration(s)**. In the `measlinrespm` directory, the RM (cummulated/averaged) is written at the end of each iteration, as file `mode_linresp.ave.iterXXXX.fits`. If some disruptive event occurred where the last iterations are known to be corrupted, use the appropriate such file, and copy it to the desired output destination.
+**Excluding most recent RM iteration(s)**. In the `measlinrespm` directory, the RM (averaged) is written at the end of each iteration, as file `mode_linresp.ave.iterXXXX.fits`. If some disruptive event occurred where the last iterations are known to be corrupted, use the appropriate such file, and copy it to the desired output destination.
 {% endhint %}
 
 ### 3. Representing WFS response in zonal space (optional)
