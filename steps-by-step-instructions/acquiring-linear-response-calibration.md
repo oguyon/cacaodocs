@@ -18,7 +18,7 @@ cacao-mkDMpokemodes -z 5 -c 25
 
 The following files are written to `./conf/RMmodesDM/`:
 
-<table><thead><tr><th width="264">File</th><th>Description</th></tr></thead><tbody><tr><td><strong>FpokeC.&#x3C;CPA>.fits</strong></td><td>Fourier modes up to spatial frquency CPA (integer)</td></tr><tr><td><strong>ZpokeC.&#x3C;NUM>.fits</strong></td><td>First NUM Zernike modes.</td></tr><tr><td><strong>SmodesC.fits</strong></td><td>Simple (single actuator) pokes</td></tr><tr><td><strong>HpokeC.fits</strong></td><td>Hadamard modes</td></tr><tr><td>Hmat.fits</td><td>Hadamard matrix</td></tr><tr><td>Hpixindex.fits</td><td>Hadamard pixel index</td></tr></tbody></table>
+<table><thead><tr><th width="264">File</th><th>Description</th></tr></thead><tbody><tr><td><strong>FpokesC.&#x3C;CPA>.fits</strong></td><td>Fourier modes up to spatial frequency CPA (integer)</td></tr><tr><td><strong>ZpokesC.&#x3C;NUM>.fits</strong></td><td>First NUM Zernike modes.</td></tr><tr><td><strong>SmodesC.fits</strong></td><td>Simple (single actuator) pokes</td></tr><tr><td><strong>HpokeC.fits</strong></td><td>Hadamard modes</td></tr><tr><td>Hmat.fits</td><td>Hadamard matrix</td></tr><tr><td>Hpixindex.fits</td><td>Hadamard pixel index</td></tr></tbody></table>
 
 DM poke modes can also be prepared independently of the <mark style="color:green;">`cacao-mkDMpokemodes`</mark> command, following the file name convention `./conf/RMmodesDM/<name>.fits`.
 

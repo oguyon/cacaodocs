@@ -74,6 +74,11 @@ When using cacao's automatic deployment framework, `$CACAO_LOOPROOTDIR/fpsCTRL.l
 fpsCTRL.log is quite verbose and includes multiple DEBUG statements. It is also non-persistent (lost upon reboot). The <mark style="color:green;">cacao-msglogCTRL</mark> command should be run to process this low-level log into a more useful daily log. This is started with:
 
 ```bash
+# Process low-level log to write daily log
+# 
+# Runs in tmux window fpsCTRLlog-proc-LOOPNAME
+# Output is echoed in tmux session fpsCTRL-out-LOOPNAME
+#
 cacao-msglogCTRL start
 ```
 
