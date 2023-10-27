@@ -34,8 +34,8 @@
 [acquiring-linear-response-calibration.md](acquiring-linear-response-calibration.md)
 {% endcontent-ref %}
 
-{% content-ref url="../tech-notes/computing-control-modes-basics.md" %}
-[computing-control-modes-basics.md](../tech-notes/computing-control-modes-basics.md)
+{% content-ref url="computing-control-modes.md" %}
+[computing-control-modes.md](computing-control-modes.md)
 {% endcontent-ref %}
 
 {% content-ref url="running-the-control-loop.md" %}
