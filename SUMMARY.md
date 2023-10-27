@@ -1,7 +1,6 @@
 # Table of contents
 
-* [Loop Monitoring & Tuning](README.md)
-* [cacao User Guide](<README (1).md>)
+* [cacao User Guide](README.md)
 * [Quick Start](quick-start.md)
 * [Installation](installation/README.md)
   * [Downloading and Installing milk+cacao](installation/downloading-and-installing-milk+cacao.md)
@@ -22,6 +21,7 @@
   * [Acquiring Linear Response Calibration](steps-by-step-instructions/acquiring-linear-response-calibration.md)
   * [Computing Control Modes](steps-by-step-instructions/computing-control-modes.md)
   * [Running the Control Loop](steps-by-step-instructions/running-the-control-loop.md)
+* [Loop Monitoring & Tuning](<README (1).md>)
 * [Tech notes](tech-notes/README.md)
   * [Computing Control Modes - Basics](tech-notes/computing-control-modes-basics.md)
   * [Control Modes - Advanced](tech-notes/control-modes-advanced.md)
