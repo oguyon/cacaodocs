@@ -1,6 +1,7 @@
 # Table of contents
 
-* [cacao User Guide](README.md)
+* [Loop Monitoring & Tuning](README.md)
+* [cacao User Guide](<README (1).md>)
 * [Quick Start](quick-start.md)
 * [Installation](installation/README.md)
   * [Downloading and Installing milk+cacao](installation/downloading-and-installing-milk+cacao.md)
