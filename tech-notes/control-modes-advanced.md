@@ -172,6 +172,8 @@ The script <mark style="color:green;">`cacao-aorun-040-compfCM`</mark> allows fo
 cacao-aorun-040-compfCM -g 0 -c 10 -sm 0.01 -se 0.01 -m 12 -ef 1.1 -eo 0.3 -t
 ```
 
+### 3.1. Forcing modes to match by rotations
+
 The script first computes a control modal space by SVD, and then applies rotations to try, as best as possible, to match the target modes. Rotations preserve orthonormality of the control modes in WFS space.
 
 The main steps are:
@@ -200,6 +202,18 @@ The location of the diagonal around which non-zero values cluster in matABr.fits
 
 <img src="../.gitbook/assets/controlmodes-forced-diagonal.png" alt="" data-size="original">
 {% endhint %}
+
+### 3.2. Handling DM edges
+
+DM shape is controlled within the area defined by dmmask, and extrapolated beyond it. To avoid the unconstrained edges of the DM from exhibiting large excursions, extrapolation parameters can be tuned in the script.
+
+The target modes are extrapolated when built. This is performed for Fourier modes by continuing the sine wave beyond the dmmask area, with a tapering down to zero. The mode is extended by a fixed number of pixel (actuator), plus a fraction of the mode spatial period. Use options -eo and -ef to change these settings.
+
+{% hint style="info" %}
+If providing custom target DM modes, ensure they are properly extrapolated to avoid issues at the edges of dmmask.
+{% endhint %}
+
+
 
 ***
 
