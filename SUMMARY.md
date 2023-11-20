@@ -25,6 +25,6 @@
   * [Modal Stats TUI](loop-monitoring-and-tuning/modal-stats-tui.md)
 * [Tech notes](tech-notes/README.md)
   * [Computing Control Modes - Basics](tech-notes/computing-control-modes-basics.md)
-  * [⚒ Control Modes - Advanced](tech-notes/control-modes-advanced.md)
+  * [🔎 Control Modes - Advanced](tech-notes/control-modes-advanced.md)
   * [Arbitrary DM & WFS geometries (non-square-grid)](tech-notes/arbitrary-dm-and-wfs-geometries-non-square-grid.md)
   * [Message logging](tech-notes/message-logging.md)

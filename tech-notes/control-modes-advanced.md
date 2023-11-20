@@ -2,7 +2,7 @@
 description: Fine-tuning control modes
 ---
 
-# ⚒ Control Modes - Advanced
+# 🔎 Control Modes - Advanced
 
 {% hint style="danger" %}
 This page provides guidelines to compute control modes to optimize performance. CACAO provides some generic scripts to do so, but with limited features. It is difficult to anticipate characteristics of individual AO systems, so some customization is inevitably required.&#x20;
