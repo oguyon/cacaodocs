@@ -10,9 +10,17 @@ Cacao implements modal control, where the input signal (WFS image for example) i
 
 At the hart of the modal control are the control modes, a set of modes with corresponding representations in input (WFS) and output (DM) spaces. _**What should these modes be ?**_
 
-***
+A few options are discussed in sections 1 and 2, with increasing complexity and performance, as summarized in the table below.
 
-<table><thead><tr><th width="127">Approach</th><th width="63">section</th><th width="211">Description</th><th width="56" data-type="checkbox">sr?</th><th width="64" data-type="checkbox">ma?</th><th width="59" data-type="checkbox">aa?</th><th width="61" data-type="checkbox">as?</th><th data-type="checkbox">ad?</th><th data-type="checkbox"></th></tr></thead><tbody><tr><td>RMpsinv</td><td>1.</td><td>straight SVD of RM (regularized pseudo-inverse)</td><td>true</td><td>false</td><td>false</td><td>false</td><td>false</td><td>false</td></tr><tr><td>wRMpsinv</td><td>2.1.</td><td>weighted-RM pseudo-inverse</td><td>true</td><td>true</td><td>false</td><td>false</td><td>false</td><td>false</td></tr><tr><td>atmKL</td><td>2.2.</td><td>SVD of WFS response to atmospheric wavefronts</td><td>true</td><td>true</td><td>true</td><td>false</td><td>false</td><td>false</td></tr><tr><td>aCLKL</td><td>2.4.</td><td>adaptive close-loop KL</td><td>true</td><td>true</td><td>true</td><td>true</td><td>true</td><td>false</td></tr></tbody></table>
+<table><thead><tr><th width="126">Approach</th><th width="272">Description</th><th width="56" data-type="checkbox">ns?</th><th width="64" data-type="checkbox">ma?</th><th width="59" data-type="checkbox">aa?</th><th width="61" data-type="checkbox">as?</th><th width="58" data-type="checkbox">ad?</th></tr></thead><tbody><tr><td><a href="control-modes-advanced.md#1.-svd-modes-straight-svd-of-response-matrix-pseudo-inverse">RMpsinv</a></td><td>straight SVD of RM (regularized pseudo-inverse)</td><td>true</td><td>false</td><td>false</td><td>false</td><td>false</td></tr><tr><td><a href="control-modes-advanced.md#2.1.-amplitude-weighting-of-zernike-+-fourier-response-matrix">wRMpsinv</a></td><td>weighted-RM pseudo-inverse</td><td>true</td><td>true</td><td>false</td><td>false</td><td>false</td></tr><tr><td><a href="control-modes-advanced.md#2.2.-atmospheric-turbulence-kl-modes">atmKL</a></td><td>KL of atmospheric wavefronts WFS response</td><td>true</td><td>true</td><td>true</td><td>false</td><td>false</td></tr><tr><td><a href="control-modes-advanced.md#2.4.-adaptive-close-loop-kl-control-mode">aCLKL</a></td><td>adaptive close-loop KL</td><td>true</td><td>true</td><td>true</td><td>true</td><td>true</td></tr></tbody></table>
+
+
+
+* \[n**s**] Handles measurement null space
+* \[**ma**] Allows for setting modal amplitudes
+* \[**aa**] Takes into account atmospheric turbulence modal amplitudes
+* \[**as**] Takes into account atmospheric turbulence temporal evolution (speed) of modes
+* \[**ad**] Adapts to changing conditions and residual wavefront errors
 
 ***
 
@@ -140,7 +148,44 @@ The process requires some care. First, the collection phase needs to be sufficie
 
 ## 3. Forcing control modes to match a target set of modes
 
+It is often desirable to enforce specific modes to be control modes, either because the control loop interacts with other systems (for example an alignment loop requiring tip-tilt and focus as input values), or for performance optimization (adopting Fourier modes in an extreme-AO system to optimize the system as a function of angular separation).
 
+The script <mark style="color:green;">`cacao-aorun-040-compfCM`</mark> allows for such optimization. Users can provide the target modes to which the control modes should be matched as an input with the -tm option, or let the script build a default set of DM modes (Zernikes + Fourier). The script places temporary files in the directory `./compfCM/`.
+
+```bash
+# Compute CM modes matching a target set of modes
+#
+# use -tm option to specify target modes
+# use -g option to specify GPU device
+# use -t option to write test files in ./compfCM/
+# 
+# Output :
+# conf/CMmodesDM/CMmodesDM_sf.fits
+# conf/CMmodesWFS/CMmodesWFS_sf.fits
+#
+cacao-aorun-040-compfCM -g 0 -c 10 -sm 0.01 -se 0.01 -m 12 -ef 1.1 -eo 0.3 -t
+```
+
+The script first computes a control modal space by SVD, and then applies rotations to try, as best as possible, to match the target modes. Rotations preserve orthonormality of the control modes in WFS space.
+
+The main steps are:
+
+* Compute target modes (Zernike+Fourier modes) if they are not provided by user
+* Compute control modes by [SVD of weighted response matrix](control-modes-advanced.md#2.1.-amplitude-weighting-of-zernike-+-fourier-response-matrix)
+* Perform Gramm-Schmidt on target modes to construct orthogonal target basis
+* Compute decomposition of control modes in orthogonal target basis. The goal of the optimization is to rotate the control modes to make this decomposition as diagonal as possible
+* Perform rotations to drive the decomposition to a diagonal. Note that the input target modes may have some redundancy (null space), while the control modes do not. Consequently, the diagonal may be curved or slanted (skipping extra modes in null space), so this optimization iteratively tracks the "diagonal"
+* Apply rotations to control modes in both WFS and DM space
+
+Unless the target modes are constructed from the control modes, it is gererally not possible to reach a perfect match while enforcing WFS-space orthonormality. The optimization algorithm is iterative and drives the control modes to approach the target modes.
+
+The figure below shows the resulting control modes in DM space. Note that the first two modes are not perfectly orthogonal in DM space (the tip-tilt angles are not exactly 90 deg off), as orthonormality is enforced in WFS space, not in DM space.
+
+<figure><img src="../.gitbook/assets/controlmodes-CMDM-forced.png" alt=""><figcaption><p>Control modes (DM) forced to match automatic taget modes (Zernke + Fourier)</p></figcaption></figure>
+
+To visualize how well the new control modes match the target modes, the files `./compfCM/matABr.fits` shows how each control mode decomposes against the Gramm-Shmidt-processed target modes. The figure below shows this decomposition before (left) and after (right) the rotations are applied.
+
+<figure><img src="../.gitbook/assets/controlmodes-forced-matrot.png" alt=""><figcaption><p>Control mode decomposition against GS-processed target modes before (left) and after (right) optimization.</p></figcaption></figure>
 
 
 
