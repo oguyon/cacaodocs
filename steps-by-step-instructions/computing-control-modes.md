@@ -64,7 +64,7 @@ Ordering CMs by spatial frequency (low-order modes first) is often preferable wh
 cacao-aorun-040-compfCM -g 0 -c 25
 ```
 
-
+The <mark style="color:green;">`cacao-aorun-040-compfCM`</mark> script allows for much customization. Check options with -h. For a more detailed discussion about how to optimize control modes, check the [Control Modes - Advanced tech notes.](../tech-notes/control-modes-advanced.md)
 
 ***
 

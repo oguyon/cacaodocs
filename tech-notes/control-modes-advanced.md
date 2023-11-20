@@ -4,9 +4,88 @@ description: Fine-tuning control modes
 
 # Control Modes - Advanced
 
-## Rationale
+## Introduction
 
-Approaches to fine-tuning control modes.
+Cacao implements modal control, where the input signal (WFS image for example) is linearly decomposed as a sum of modes. The coefficients of this decomposition represent the input measurement in the control modal space. The coefficients are then processed to compute a modal control command.
+
+At the hart of the modal control are the control modes, a set of modes with corresponding representations in input (WFS) and output (DM) spaces. _**What should these modes be ?**_
+
+## **1. SVD modes (SVD of Response Matrix)**
+
+_**SVD modes**_ are often used for AO control. They are the modes computed by singular value decomposition of the system response matrix. They allow for a regularized pseudo-inverse of the response matrix to be used for control. The SVD modes are ordered by singular value, with the first modes corresponding to the unity norm DM actuator producing the strongest WFS response. See [Computing Control Modes - Basics](../steps-by-step-instructions/computing-control-modes.md) for more details, notations, and how to computer SVD modes.
+
+### 1.1. Why SVD modes ?
+
+Using SVD modes for control allows for identification of the WFS null space, corresponding to DM actuations that cannot be measured by the WFS. In the presense of noise, the null space is a fuzzy concept, as some DM commands will produce a weak (but non-zero) WFS signal. Our control law needs to filter modes with weak or zero response, but we should to do so in a controlled way, balancing the need to control as many modes as possible, but avoid amplifying noise. The SVD modes allow for this tuning, where we can control the strongest modes (the ones mode readily sensed by the WFS) with high gain, and apply lower gain for modes that are weakly sensed. **In modal control with SVD modes, control gains are tuned for each mode, primarily as a function of how well a mode is sensed.**
+
+### **1.2. SVD modes - Example**
+
+The SVD modes are computed from the response matrix, which consists of pairs of DM poke modes and their corresponding WFS response. The two figures below show the RM poke modes and the corresponding WFS response. Only the first 48 modes are shown.
+
+<figure><img src="../.gitbook/assets/controlmodes-SVD-RMDM.png" alt=""><figcaption><p><strong>Response matrix DM modes</strong>. These are the DM patterns for which the corresponding WFS response is measured.</p></figcaption></figure>
+
+The response matrix DM mode were here created by concatenating the first 5 Zernike modes, and Fourier modes of increasing spatial frequency.
+
+<figure><img src="../.gitbook/assets/controlmodes-SVD-RMWFS (1).png" alt=""><figcaption><p><strong>WFS response to the response matrix DM modes.</strong></p></figcaption></figure>
+
+Here, we used a pyramid WFS, so we see that each of the 48 modal responses (arranged here in a 12x4 grid) consists of 4 pupil images.&#x20;
+
+Note that we computed these responses by multiplying the zonal response matrix (measured) by the response matrix DM modes. Thanks to linearity, this is equivalent to poking the actual DM modes, but it is more flexible. To compute the response matrix DM and WFS modes above:
+
+```bash
+# Compute RM modes in Zernike+Fourier basis
+#
+# -t 1.0 : do not amplify TT
+# -a 0.0 : do not apply power-law to Fourier modes
+# 
+cacao-aorun-033-RM-mksynthetic -t 1.0 -a 0.0
+```
+
+Now we compute the control modes by SVD with the <mark style="color:green;">`cacao-aorun-039-compstrCM`</mark> command:
+
+```bash
+# Compute SVD modes
+#
+cacao-aorun-039-compstrCM
+```
+
+The DM control modes (file `conf/CMmodesDM/CMmodesDM.fits`) are shown below.
+
+<figure><img src="../.gitbook/assets/controlmodes-SVD-CMDM.png" alt=""><figcaption><p>Control modes, DM space.</p></figcaption></figure>
+
+The first mode (top left) is the DM pattern that will generate the strongest WFS response.&#x20;
+
+### 1.3. Limitations of SVD modes
+
+A key limitation of SVD modes, apparent in the figure, is that _**they do not take into account the statistical properties of input disturbances**_. The dominant SVD modes (largest singular value) may be quite different from the modes with the strongest amplitude in atmospheric turbulence.
+
+Also, we may want to force control modes to match some specific target. For example, the first two control modes may need to be as close as possible to Tip and Tilt so that pointing can easily be offloaded to another loop. We may want the control modes to be ordered by spatial frequency, as the statistical properties of atmospheric turbulence (amplitude, speed) are driven by spatial frequency.
+
+## 2. Tuning the response matrix prior to SVD computation
+
+We show here how we can still compute the control modes by SVD, but with a different input response matrix. This approach mitigates some of the issues of the straight SVD computation above.
+
+With knowledge that some modes have stronger amplitude in the input, we can build an amplitude-aware response matrix (RM), where the RM is now a better representation of input disturbances.
+
+The first approach is to construct a sensible set of DM modes from Zerkine and Fourier modes, and set their amplitudes to capture the expected statistical properties of input disturbances. Here, we set the first 5 modes to be Zerkines (Tip, Tilt, Focus, Astigmatism), and subsequent modes to be Fourier modes of increasing spatial frequency. We multiply the tip-tilt amplitude by 8x as we expect some pointing vibrations, and we gradually decrease the amplitude of high spatial frequencies with a power-law:
+
+```bash
+# Compute RM modes in Zernike+Fourier basis
+#
+# -t 8.0 : amplify TT by 8x
+# -a 1.0 : apply power-law to Fourier modes
+# 
+cacao-aorun-033-RM-mksynthetic -t 8.0 -a 1.0
+```
+
+
+
+```bash
+```
+
+
+
+
 
 ## 1. Useful Tools and Scripts
 
