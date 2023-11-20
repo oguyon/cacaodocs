@@ -18,7 +18,7 @@ At the hart of the modal control are the control modes, a set of modes with corr
 
 A few options are discussed in sections 1 and 2, with increasing complexity and performance, as summarized in the table below.
 
-<table><thead><tr><th width="126">Approach</th><th width="272">Description</th><th width="56" data-type="checkbox">ns?</th><th width="64" data-type="checkbox">ma?</th><th width="59" data-type="checkbox">aa?</th><th width="61" data-type="checkbox">as?</th><th width="58" data-type="checkbox">ad?</th></tr></thead><tbody><tr><td><a href="control-modes-advanced.md#1.-svd-modes-straight-svd-of-response-matrix-pseudo-inverse">RMpsinv</a></td><td>straight SVD of RM (regularized pseudo-inverse)</td><td>true</td><td>false</td><td>false</td><td>false</td><td>false</td></tr><tr><td><a href="control-modes-advanced.md#2.1.-amplitude-weighting-of-zernike-+-fourier-response-matrix">wRMpsinv</a></td><td>weighted-RM pseudo-inverse</td><td>true</td><td>true</td><td>false</td><td>false</td><td>false</td></tr><tr><td><a href="control-modes-advanced.md#2.2.-atmospheric-turbulence-kl-modes">atmKL</a></td><td>KL of atmospheric wavefronts WFS response</td><td>true</td><td>true</td><td>true</td><td>false</td><td>false</td></tr><tr><td><a href="control-modes-advanced.md#2.4.-adaptive-close-loop-kl-control-mode">aCLKL</a></td><td>adaptive close-loop KL</td><td>true</td><td>true</td><td>true</td><td>true</td><td>true</td></tr></tbody></table>
+<table><thead><tr><th width="126">Approach</th><th width="272">Description</th><th width="56" data-type="checkbox">ns</th><th width="64" data-type="checkbox">ma</th><th width="59" data-type="checkbox">aa</th><th width="61" data-type="checkbox">as</th><th width="58" data-type="checkbox">ad</th></tr></thead><tbody><tr><td><a href="control-modes-advanced.md#1.-svd-modes-straight-svd-of-response-matrix-pseudo-inverse">RMpsinv</a></td><td>straight SVD of RM (regularized pseudo-inverse)</td><td>true</td><td>false</td><td>false</td><td>false</td><td>false</td></tr><tr><td><a href="control-modes-advanced.md#2.1.-amplitude-weighting-of-zernike-+-fourier-response-matrix">wRMpsinv</a></td><td>weighted-RM pseudo-inverse</td><td>true</td><td>true</td><td>false</td><td>false</td><td>false</td></tr><tr><td><a href="control-modes-advanced.md#2.2.-atmospheric-turbulence-kl-modes">atmKL</a></td><td>KL of atmospheric wavefronts WFS response</td><td>true</td><td>true</td><td>true</td><td>false</td><td>false</td></tr><tr><td><a href="control-modes-advanced.md#2.4.-adaptive-close-loop-kl-control-mode">aCLKL</a></td><td>adaptive close-loop KL</td><td>true</td><td>true</td><td>true</td><td>true</td><td>true</td></tr></tbody></table>
 
 
 
@@ -110,7 +110,7 @@ A synthetic set of modes, ordered by spatial frequency, is created in DM space.&
 cacao-aorun-033-RM-mksynthetic -t 8.0 -a 1.0
 ```
 
-The corresponding RM DM modes exhibit the desired modal amplitude:
+The corresponding RM DM modes now exhibit the desired modal amplitudes:
 
 <figure><img src="../.gitbook/assets/controlmodes-SVDw-RMDM.png" alt=""><figcaption><p>Response matrix DM modes with aplification of TT and power-law amplitude decay of higher spatial frequencies</p></figcaption></figure>
 
