@@ -2,7 +2,13 @@
 description: Fine-tuning control modes
 ---
 
-# Control Modes - Advanced
+# ⚒ Control Modes - Advanced
+
+{% hint style="danger" %}
+This page provides guidelines to compute control modes to optimize performance. CACAO provides some generic scripts to do so, but with limited features. It is difficult to anticipate characteristics of individual AO systems, so some customization is inevitably required.&#x20;
+
+**Experienced users are encouraged to develop custom scripts optimized to their needs**. None of this requires cacao, and can be done in any programming or scripting language linked to linear algebra libraries.
+{% endhint %}
 
 ## Introduction
 
@@ -174,20 +180,26 @@ The main steps are:
 * Compute control modes by [SVD of weighted response matrix](control-modes-advanced.md#2.1.-amplitude-weighting-of-zernike-+-fourier-response-matrix)
 * Perform Gramm-Schmidt on target modes to construct orthogonal target basis
 * Compute decomposition of control modes in orthogonal target basis. The goal of the optimization is to rotate the control modes to make this decomposition as diagonal as possible
-* Perform rotations to drive the decomposition to a diagonal. Note that the input target modes may have some redundancy (null space), while the control modes do not. Consequently, the diagonal may be curved or slanted (skipping extra modes in null space), so this optimization iteratively tracks the "diagonal"
+* Perform rotations to drive the decomposition to a diagonal. Note that the input target modes may have some redundancy (null space), while the control modes do not. Consequently, the diagonal may be curved or slanted (skipping extra modes in null space), so this optimization iteratively tracks the "diagonal" and updates the optimization metric accordingly (values should cluster around the diagonal).
 * Apply rotations to control modes in both WFS and DM space
 
 Unless the target modes are constructed from the control modes, it is gererally not possible to reach a perfect match while enforcing WFS-space orthonormality. The optimization algorithm is iterative and drives the control modes to approach the target modes.
 
 The figure below shows the resulting control modes in DM space. Note that the first two modes are not perfectly orthogonal in DM space (the tip-tilt angles are not exactly 90 deg off), as orthonormality is enforced in WFS space, not in DM space.
 
-<figure><img src="../.gitbook/assets/controlmodes-CMDM-forced.png" alt=""><figcaption><p>Control modes (DM) forced to match automatic taget modes (Zernke + Fourier)</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/controlmodes-CMDM-forced.png" alt=""><figcaption><p>Control modes (DM) forced to match automatic target modes (Zernke + Fourier)</p></figcaption></figure>
 
 To visualize how well the new control modes match the target modes, the files `./compfCM/matABr.fits` shows how each control mode decomposes against the Gramm-Shmidt-processed target modes. The figure below shows this decomposition before (left) and after (right) the rotations are applied.
 
-<figure><img src="../.gitbook/assets/controlmodes-forced-matrot.png" alt=""><figcaption><p>Control mode decomposition against GS-processed target modes before (left) and after (right) optimization.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/controlmodes-forced-matrot.png" alt=""><figcaption><p>Control mode decomposition against GS-processed target modes before (left) and after (right) optimization. Here, there are 280 control modes, ordered from bottom to top, and 629 target modes, from left to right (only 309 shown here to keep the figure size small). After optimization, dominant values cluster around a close-to-diagonal curve.</p></figcaption></figure>
 
 
+
+{% hint style="info" %}
+The location of the diagonal around which non-zero values cluster in matABr.fits is a good indication of the quality of the target modes. Users should check it if providing their own target modes. The diagonal should ideally exhibit a slight curvature with effective target mode index > control mode index. The plot below shows this behavior.
+
+<img src="../.gitbook/assets/controlmodes-forced-diagonal.png" alt="" data-size="original">
+{% endhint %}
 
 ***
 
