@@ -53,8 +53,7 @@ Ordering CMs by spatial frequency (low-order modes first) is often preferable wh
 
 ```bash
 # Input: 
-# - conf/CMmodesDM.fits
-# - conf/CMmodesWFS.fits
+# ./conf/RMmodesWFS/zrespM-H.fits
 # - conf/dmmask.fits
 # - conf/wfsmask.fits
 #
