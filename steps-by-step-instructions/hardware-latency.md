@@ -9,3 +9,11 @@ cacao-aorun-020-mlat -w
 
 Check the result in fpsCTRL TUI, and by plotting the latency measurement curve.
 
+
+
+```bash
+cd LOOPRUNDIR/fps.mlat-LOOPNUMBER.datadir
+gnuplot
+plot "hardwlatency.dat" u 2:3
+exit
+```
