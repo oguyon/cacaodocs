@@ -6,3 +6,6 @@ The time delay between issuing a command to the DM and having the corresponding 
 # -w option is for "wait until done"
 cacao-aorun-020-mlat -w
 ```
+
+Check the result in fpsCTRL TUI, and by plotting the latency measurement curve.
+
