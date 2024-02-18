@@ -155,7 +155,7 @@ cacao-msglogCTRL stop
 Processing of the low-level fpsCTRL log to the daily log is running within a tmux session. To view the output in real time, with colors:
 
 ```bash
-tmux a -t fpsCTRLlog-$CACAO_LOOPNAME-vispyr2
+tmux a -t fpsCTRLlog-$CACAO_LOOPNAME-out-vispyr2
 ```
 
 <figure><img src="../.gitbook/assets/fpsCTRLlog-daily-tmux.png" alt=""><figcaption><p>Content of fpsCTRL processing tmux session</p></figcaption></figure>
